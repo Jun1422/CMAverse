@@ -127,7 +127,7 @@ Table: Table: Supported Data Types and Functionalities of `cmest`
 The latest version can be installed via:
 
 ```{r eval=F}
-devtools::install_github("BS1125/CMAverse")
+devtools::install_github("Jun1422/CMAverse")
 ```
 
 Load `CMAverse`:
