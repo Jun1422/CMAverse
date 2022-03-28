@@ -1,0 +1,18 @@
+pandoc: 2.11.4
+pkgdown: 1.6.1
+pkgdown_sha: ~
+articles:
+  case_control: case_control.html
+  measurement_error: measurement_error.html
+  multiple_imputation: multiple_imputation.html
+  multiple_mediators: multiple_mediators.html
+  multistate_model: multistate_model.html
+  overview: overview.html
+  post_exposure_confounding: post_exposure_confounding.html
+  quickstart: quickstart.html
+  single_mediator: single_mediator.html
+last_built: 2022-03-24T15:31Z
+urls:
+  reference: https://Jun1422.github.io/test_repo//reference
+  article: https://Jun1422.github.io/test_repo//articles
+

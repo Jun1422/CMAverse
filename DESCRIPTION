@@ -1,0 +1,64 @@
+Package: CMAverse
+Type: Package
+Title: Causal Mediation Analysis
+Version: 0.1.0
+URL: https://bs1125.github.io/CMAverse/, https://github.com/BS1125/CMAverse
+Authors@R: c(
+    person("Baoyi", "Shi", role = c("aut", "cre"), email = "bs3141@cumc.columbia.edu"),
+    person("Christine", "Choirat", role = "aut", email = "cchoirat@gmail.com"),
+    person("Linda", "Valeri", role = "aut", email = "lv2424@cumc.columbia.edu")
+    )
+Maintainer: Baoyi Shi <bs3141@cumc.columbia.edu>
+Description: CMAverse provides a suite of functions for reproducible causal mediation 
+    analysis including DAG visualization, statistical modeling and sensitivity analysis. It 
+    implements six causal mediation analysis approaches including the regression-based 
+    approach by Valeri et al. (2013) <doi: 10.1037/a0031034> and VanderWeele et al. (2014) 
+    <doi: 10.1515/em-2012-0010>, the weighting-based approach by VanderWeele et al. (2014)
+    <doi: 10.1515/em-2012-0010>, the inverse odd-ratio weighting approach by Tchetgen Tchetgen 
+    (2013) <doi: 10.1002/sim.5864>, the natural effect model by Vansteelandt et al. (2012) 
+    <doi: 10.1515/2161-962X.1014>, the marginal structural model by VanderWeele 
+    et al. (2017) <doi: 10.1111/rssb.12194>, and the g-formula approach for a single time point 
+    exposure and multiple mediators allowing for time varying confounders by Robins (1986)
+    <doi: 10.1016/0270-0255(86)90088-6>. Moreover, CMAverse conducts sensitivity analysis for
+    unmeasured confounding via the E-value approach by VanderWeele et al. (2017) 
+    <doi: 10.7326/M16-2607> and Smith et al. (2019) <doi: 10.1097/EDE.0000000000001064>, and 
+    sensitivity analysis for measurement error via regression calibration by Carroll et al. (1995) 
+    <doi: 10.1201/9781420010138> and SIMEX by Cook et al. (1994) <doi: 10.2307/2290994> and 
+    Küchenhoff et al. (2006) <doi: 10.1111/j.1541-0420.2005.00396.x>. CMAverse also supports 
+    causal mediation analysis for a case control study. When the dataset contains missing values,
+    CMAverse can conduct multiple imputations for causal mediation analysis.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    ggdag,
+    stringr,
+    simex,
+    dplyr,
+    mice,
+    nnet,
+    MASS,
+    survey,
+    survival,
+    SuppDists,
+    boot,
+    msm,
+    Matrix,
+    EValue,
+    ggplot2,
+    medflex
+RoxygenNote: 7.1.2
+Suggests: 
+    knitr,
+    kableExtra,
+    dagitty,
+    rmarkdown,
+    testthat,
+    covr
+VignetteBuilder: knitr
+Depends: R (>= 2.10),
+    dplyr,
+    mstate,
+    survival,
+    tidyr
+BugReports: https://github.com/BS1125/CMAverse/issues
