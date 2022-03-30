@@ -131,6 +131,8 @@ data_final$A = as.factor(data_final$A) #generate a factor exposure
 
 data = data_final %>% select(id,A,M,Y,M_ind,Y_ind,c1,c2)
 
+
+
 ```
 
 

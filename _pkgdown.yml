@@ -5,7 +5,7 @@ authors:
     href: "https://www.lindavaleri.com/"
     
 title: CMAverse
-url: https://Jun1422.github.io/test_repo/
+url: https://github.com/Jun1422/CMAverse.git/
 template:
   params:
     bootswatch: sandstone
@@ -40,4 +40,4 @@ navbar:
       href: reference/index.html
     - icon: fa-github fa-lg
       text: "GitHub"
-      href: https://Jun1422.github.io/test_repo/ 
+      href: https://github.com/Jun1422/CMAverse.git/

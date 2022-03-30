@@ -11,8 +11,8 @@ articles:
   post_exposure_confounding: post_exposure_confounding.html
   quickstart: quickstart.html
   single_mediator: single_mediator.html
-last_built: 2022-03-28T22:54Z
+last_built: 2022-03-29T23:56Z
 urls:
-  reference: https://Jun1422.github.io/test_repo//reference
-  article: https://Jun1422.github.io/test_repo//articles
+  reference: https://github.com/Jun1422/CMAverse.git//reference
+  article: https://github.com/Jun1422/CMAverse.git//articles
 

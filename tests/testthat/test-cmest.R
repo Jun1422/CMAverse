@@ -1,5 +1,99 @@
 context("cmest estimates causal effects correctly")
 
+test_that("cmest works correctly for survival Y and survival M", {
+  
+  set.seed(1)
+  # data simulation
+  gen_srv <- function(n, lambda, gamma, beta, X){
+    X = as.matrix(X)
+    beta = as.matrix(beta, ncol=1)
+    T = (-log(runif(n)) / (lambda * exp(X %*% beta)))^(1/gamma) #weibull distribution
+    return(T)
+  }
+  n <- 10000
+  c1 = sample(c(0,1),replace=TRUE, size=n,c(0.6, 0.4)) #binary confounder
+  c2 = rnorm(n, mean = 1, sd = 1) #con confounder
+  A = sample(c(0,1),replace=TRUE, size=n, c(0.7,0.3)) #binary exposure
+  M = gen_srv(n=n, lambda = 0.1,gamma = 0.8, beta = c(-0.3,0.4,0.5), X=data.frame(A,c1,c2)) #time to event mediator
+  Y = gen_srv(n=n, lambda = 0.07, gamma = 0.12, beta = c(0.2,0.3,0.4), X=data.frame(A,c1,c2)) #time to event outcome
+  data = data.frame(id = c(1:n),A,c1,c2, M, Y)
+  # indicator for event
+  data$M_ind = ifelse(data$M <= data$Y, 1, 0)
+  data$Y_ind = 1
+  data <- merge(data,full , by = "id")
+  #modify Y distribution
+  trans_matrix = transMat(x = list(c(2, 3), c(3), c()), names = c("A", "M", "Y"))
+  covs = c("A","M", "c1","c2")
+  pre_data = msprep(time = c(NA, "M", "Y"), status = c(NA, "M_ind", "Y_ind"),
+                    data = data, trans = trans_matrix, keep = covs)
+  pre_data = expand.covs(pre_data, covs, append = TRUE, longnames = FALSE)
+  pre_data$A_M.3 = pre_data$A.3*pre_data$M.3
+  # resample for T < S
+  data_23= pre_data[which(pre_data$trans == 3),]
+  data_23_tem = data.frame(id = rep(NA,dim(data_23)[1]),
+                           new_y = rep(NA,dim(data_23)[1]))
+  
+  for(i in 1:dim(data_23)[1]){
+    data_23_tem$id[i] = data_23$id[i]
+    repeat {
+      # do something
+      time_test = gen_srv(n = 1, 
+                          lambda = 0.1,  
+                          gamma = 0.5,
+                          beta = c(as.numeric(0.4),
+                                   0,
+                                   as.numeric(0.5),
+                                   as.numeric(0.6),
+                                   as.numeric(-0.2)), 
+                          X = data_23[i, c("A.3", "M.3", "c1.3","c2.3", "A_M.3")])
+      # exit if the condition is met
+      if (time_test > data_23[i,"M.3"]) break
+    }
+    data_23_tem$new_y[i] = time_test
+  }
+  data_temp = merge(data, data_23_tem, by = "id", all = T)
+  #modify Y and M
+  data_temp$Y[which(data_temp$M_ind == 1)] = data_temp$new_y[which(data_temp$M_ind == 1)]
+  data_temp$M[which(data_temp$M_ind == 0)] = data_temp$Y[which(data_temp$M_ind == 0)]
+  data_final = data_temp
+  data_final$Y_day = data_final$Y*30
+  data_final$M_day = data_final$M*30
+  data_final$Y_ind[which(data_final$Y > 24)] = 0 #censored data
+  data_final$Y[which(data_final$Y> 24)] = 24
+  data_final$Y_day[which(data_final$sY_day > 24*30)] = 24*30
+  data_final$M_ind[which(data_final$M > 24)] = 0
+  data_final$M[which(data_final$M > 24)] = 24
+  data_final$M_day[which(data_final$M_day > 24*30)] = 24*30
+  data_final$A = as.factor(data_final$A) #generate a factor exposure
+  
+  data = data_final %>% select(id,A,M,Y,M_ind,Y_ind,c1,c2)
+  data_sub = data[sample(nrow(data), 5000), ]
+  # results of cmest
+  res_survsurv_multi <- cmest(data = data_sub, model = 'multistate',total_duration = 24, 
+                              time_grid = 1,survival_time_fortable = 22, exposure = 'A',mediator = 'M', 
+                              outcome = 'Y', event = "Y_ind",mediator_event = "M_ind", basec = c('c1','c2'),
+                              basecval = c('c1' = '0','c2' = '0'),astar = '0',a='1',nboot=10)
+  
+  time <- c(NA, "M", "Y")
+  status <- c(NA, "M_ind", "Y_ind")
+  keep = c("A", "M", "c1","c2")
+  trans <- transMat(x = list(c(2, 3), c(3), c()), names = c("Dx", "AE", "S"))
+  #####run the model
+  msdata = msprep(time = time, status = status,
+                  data = data, trans = trans, keep = keep)
+  msdata <- expand.covs(msdata, keep, append = TRUE, longnames = FALSE)
+  fit_new = coxph(Surv(Tstart, Tstop, status) ~
+                    A.1 + A.2 + A.3 + c1.1 + c1.2 + c1.3 + c2.1 + c2.2 + c2.3 + A.3*M.3 +
+                    strata(trans), data =  msdata , method = "breslow",control = coxph.control(timefix = FALSE))
+  
+  # test
+  expect_equal(unname(res_survsurv_multi$reg.output$model_result$coefficients), 
+               unname(fit_new$coefficients), tolerance = 0.2)
+  
+  
+})
+
+
 test_that("cmest works correctly for binary Y and continuous M", {
   
   set.seed(1)
