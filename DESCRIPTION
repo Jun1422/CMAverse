@@ -2,7 +2,7 @@ Package: CMAverse
 Type: Package
 Title: Causal Mediation Analysis
 Version: 0.1.0
-URL: https://bs1125.github.io/CMAverse/, https://github.com/BS1125/CMAverse
+URL: https://jun1422.github.io/CMAverse/, https://github.com/Jun1422/CMAverse.git
 Authors@R: c(
     person("Baoyi", "Shi", role = c("aut", "cre"), email = "bs3141@cumc.columbia.edu"),
     person("Jun", "yin", role = "aut",email = "jy2965@columbia.edu"),
@@ -62,4 +62,4 @@ Depends: R (>= 2.10),
     mstate,
     survival,
     tidyr
-BugReports: https://github.com/BS1125/CMAverse/issues
+BugReports: https://github.com/Jun1422/CMAverse.git/issues

@@ -117,9 +117,9 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Statistical Modeling with a Single Mediator</h1>
             
-            <h4 class="date">2022-03-29</h4>
+            <h4 class="date">2022-03-30</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/BS1125/CMAverse/blob/master/vignettes/single_mediator.Rmd"><code>vignettes/single_mediator.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/Jun1422/CMAverse.git/blob/master/vignettes/single_mediator.Rmd"><code>vignettes/single_mediator.Rmd</code></a></small>
       <div class="hidden name"><code>single_mediator.Rmd</code></div>
 
     </div>
@@ -128,7 +128,7 @@
     
 <p>This example demonstrates how to use <code>cmest</code> when there is a single mediator. For this purpose, we simulate some data containing a continuous baseline confounder <span class="math inline">\(C_1\)</span>, a binary baseline confounder <span class="math inline">\(C_2\)</span>, a binary exposure <span class="math inline">\(A\)</span>, a binary mediator <span class="math inline">\(M\)</span> and a binary outcome <span class="math inline">\(Y\)</span>. The true regression models for <span class="math inline">\(A\)</span>, <span class="math inline">\(M\)</span> and <span class="math inline">\(Y\)</span> are: <span class="math display">\[logit(E(A|C_1,C_2))=0.2+0.5C_1+0.1C_2\]</span> <span class="math display">\[logit(E(M|A,C_1,C_2))=1+2A+1.5C_1+0.8C_2\]</span> <span class="math display">\[logit(E(Y|A,M,C_1,C_2)))=-3-0.4A-1.2M+0.5AM+0.3C_1-0.6C_2\]</span></p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://bs1125.github.io/CMAverse/">CMAverse</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://jun1422.github.io/CMAverse/">CMAverse</a></span><span class="op">)</span></code></pre></div>
 <pre><code>## Loading required package: dplyr</code></pre>
 <pre><code>## 
 ## Attaching package: 'dplyr'</code></pre>

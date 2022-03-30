@@ -339,7 +339,7 @@ mediators. The two causal scenarios supported are:
 <td style="text-align: center;">√</td>
 <td style="text-align: center;">√</td>
 <td style="text-align: center;">√</td>
-<td style="text-align: center;">√</td>
+<td style="text-align: center;">×</td>
 </tr>
 <tr class="odd">
 <td>Effects Conditional on C</td>
@@ -349,7 +349,7 @@ mediators. The two causal scenarios supported are:
 <td style="text-align: center;">×</td>
 <td style="text-align: center;">×</td>
 <td style="text-align: center;">×</td>
-<td style="text-align: center;">×</td>
+<td style="text-align: center;">√</td>
 </tr>
 </tbody>
 </table>
@@ -395,7 +395,7 @@ regression-based approach* and *the g-formula approach*.
 
 The latest version can be installed via:
 
-    devtools::install_github("BS1125/CMAverse")
+    devtools::install_github("Jun1422/CMAverse")
 
 Load `CMAverse`:
 
