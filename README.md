@@ -17,7 +17,7 @@ The R package `CMAverse` provides a suite of functions for reproducible
 causal mediation analysis including `cmdag` for DAG visualization,
 `cmest` for statistical modeling and `cmsens` for sensitivity analysis.
 
-See the package [website](https://bs1125.github.io/CMAverse/) for a
+See the package [website](https://jun1422.github.io/CMAverse/) for a
 quickstart guide, an overview of statistical modeling approaches and
 examples.
 
