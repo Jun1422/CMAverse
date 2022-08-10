@@ -20,7 +20,7 @@ test_that("cmest works correctly for survival Y and survival M", {
   # indicator for event
   data$M_ind = ifelse(data$M <= data$Y, 1, 0)
   data$Y_ind = 1
-  data <- merge(data,full , by = "id")
+  #data <- merge(data,full, by = "id")
   #modify Y distribution
   trans_matrix = transMat(x = list(c(2, 3), c(3), c()), names = c("A", "M", "Y"))
   covs = c("A","M", "c1","c2")
@@ -73,22 +73,17 @@ test_that("cmest works correctly for survival Y and survival M", {
                               time_grid = 1,survival_time_fortable = 22, exposure = 'A',mediator = 'M', 
                               outcome = 'Y', event = "Y_ind",mediator_event = "M_ind", basec = c('c1','c2'),
                               basecval = c('c1' = '0','c2' = '0'),astar = '0',a='1',nboot=10)
+
+  # ref results
+  data_full = data[sample(nrow(data), 25000, replace = TRUE), ]
   
-  time <- c(NA, "M", "Y")
-  status <- c(NA, "M_ind", "Y_ind")
-  keep = c("A", "M", "c1","c2")
-  trans <- transMat(x = list(c(2, 3), c(3), c()), names = c("Dx", "AE", "S"))
-  #####run the model
-  msdata = msprep(time = time, status = status,
-                  data = data, trans = trans, keep = keep)
-  msdata <- expand.covs(msdata, keep, append = TRUE, longnames = FALSE)
-  fit_new = coxph(Surv(Tstart, Tstop, status) ~
-                    A.1 + A.2 + A.3 + c1.1 + c1.2 + c1.3 + c2.1 + c2.2 + c2.3 + A.3*M.3 +
-                    strata(trans), data =  msdata , method = "breslow",control = coxph.control(timefix = FALSE))
-  
+  res_survsurv_multi_ref <- cmest(data =   data_full, model = 'multistate',total_duration = 24, 
+                              time_grid = 1,survival_time_fortable = 22, exposure = 'A',mediator = 'M', 
+                              outcome = 'Y', event = "Y_ind",mediator_event = "M_ind", basec = c('c1','c2'),
+                              basecval = c('c1' = '0','c2' = '0'),astar = '0',a='1',nboot=10)
+  ref = unname(res_survsurv_multi_ref$effect.pe)
   # test
-  expect_equal(unname(res_survsurv_multi$reg.output$model_result$coefficients), 
-               unname(fit_new$coefficients), tolerance = 0.2)
+  expect_equal(unname(res_survsurv_multi$effect.pe),ref, tolerance = 0.1)
   
   
 })

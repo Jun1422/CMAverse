@@ -94,7 +94,7 @@ relevel(data[,exposure], ref = astar)
                       data = data_b, trans = trans, keep = keep)
       msbmt <- expand.covs(msbmt, keep, append = TRUE, longnames = FALSE)
       ### Estimation
-      fit <- coxph(formula, data=msbmt, method=method, model=TRUE,,control = coxph.control(timefix = FALSE))
+      fit <- coxph(formula, data=msbmt, method=method, model=TRUE,control = coxph.control(timefix = FALSE))
       ### Prediction
       ###cumulative hazards for transitions 0-1 and 0-2 for Exposure = 0
       #set up new data (exposure = 0)
