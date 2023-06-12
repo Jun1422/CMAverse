@@ -10,7 +10,7 @@ test_that("cmest works correctly for survival Y and survival M", {
     T = (-log(runif(n)) / (lambda * exp(X %*% beta)))^(1/gamma) #weibull distribution
     return(T)
   }
-  n <- 10000
+  n <- 25000
   c1 = sample(c(0,1),replace=TRUE, size=n,c(0.6, 0.4)) #binary confounder
   c2 = rnorm(n, mean = 1, sd = 1) #con confounder
   A = sample(c(0,1),replace=TRUE, size=n, c(0.7,0.3)) #binary exposure
@@ -72,18 +72,19 @@ test_that("cmest works correctly for survival Y and survival M", {
   res_survsurv_multi <- cmest(data = data_sub, model = 'multistate',total_duration = 24, 
                               time_grid = 1,survival_time_fortable = 22, exposure = 'A',mediator = 'M', 
                               outcome = 'Y', event = "Y_ind",mediator_event = "M_ind", basec = c('c1','c2'),
-                              basecval = c('c1' = '0','c2' = '0'),astar = '0',a='1',nboot=10)
-
+                              basecval = c('c1' = '0','c2' = '0'),astar = '0',a='1',nboot=1)
+ 
   # ref results
-  data_full = data[sample(nrow(data), 25000, replace = TRUE), ]
+  #data_full = data[sample(nrow(data), 25000, replace = TRUE), ]
   
-  res_survsurv_multi_ref <- cmest(data =   data_full, model = 'multistate',total_duration = 24, 
+  res_survsurv_multi_ref <- cmest(data =   data, model = 'multistate',total_duration = 24, 
                               time_grid = 1,survival_time_fortable = 22, exposure = 'A',mediator = 'M', 
                               outcome = 'Y', event = "Y_ind",mediator_event = "M_ind", basec = c('c1','c2'),
-                              basecval = c('c1' = '0','c2' = '0'),astar = '0',a='1',nboot=10)
-  ref = unname(res_survsurv_multi_ref$effect.pe)
+                              basecval = c('c1' = '0','c2' = '0'),astar = '0',a='1',nboot=1)
+  #ref = unname( res_survsurv_multi_ref$reg.output$model_result$coefficients)
+  ref = unname( res_survsurv_multi_ref$effect.pe)
   # test
-  expect_equal(unname(res_survsurv_multi$effect.pe),ref, tolerance = 0.1)
+  expect_equal(unname( res_survsurv_multi$effect.pe),ref, tolerance = 0.05)
   
   
 })
