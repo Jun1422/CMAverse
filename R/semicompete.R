@@ -322,7 +322,7 @@ semicompete <- function(method = "breslow"){
   out$ref = ref_list
   
   reg_output <- list()
-  reg_output$formula = paste0("coxph(",saveformula,")")
+  reg_output$formula = paste0("coxph(",formula,")")
   reg_output$model_result = model_fit
   out$reg.output = reg_output
   
